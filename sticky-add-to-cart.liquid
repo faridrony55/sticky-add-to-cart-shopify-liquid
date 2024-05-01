@@ -1,0 +1,166 @@
+<!-- code for sticky bar -->
+ <div class="sticky-bar-form" style="{% if section.settings.enable_sticky_bar %}display:block; {% else %} display:none; {% endif %}">
+   {% form 'product', product, class: product_form_class, data-product-form: '' %}
+            <div class="sticky-bar" style="display:none;">
+              <div class="product-title-sticky">
+                <div class="sticky-bar-thumb-img">
+                    <img class="sticky-bar-thumb-thumb" src="{{ product.featured_image | img_url }}" width="60" height="60">
+                </div>
+     <!-- code from websensepro.com -->
+        <div class="sticky-bar-title">
+          <span class="sticky-title">{{ product.title }}</span>
+          </div>
+              </div>
+         
+<div class="sticky-bar-price">
+<div class="variant-drop-down">
+<form action="/cart/add" method="post" >
+
+ <!-- <div class="product-form__item">
+      <label for="Quantity-{{ section.id }}" class="quantity-label">Quantity</label>
+      <input type="number" id="Quantity-{{ section.id }}"
+        name="quantity" value="1" min="1" pattern="[0-9]*"
+        class="quantity__inputd" data-quantity-input
+      >  
+</div>  
+ -->
+ 
+   
+  
+{% if product.has_only_default_variant %}
+  <span class="sticky-bar-price">
+        {%- render 'price', product: product, use_variant: true' -%}
+      </span>
+  {% endif %}
+<select name="id" style="{% if product.has_only_default_variant %}display:none; {% endif %}">
+{% for variant in product.variants %}
+{% if variant.available %}
+<option value="{{ variant.id }}">{{ variant.title }} - {{product.variants[forloop.index0].price | money}}</option>
+{% else %}
+  <!-- code from websensepro.com -->
+<option disabled="disabled">{{ variant.title }} - Sold Out</option>
+{% endif %}
+{% endfor %}
+</select>
+<input type="submit" value="Add To Cart" class="variant-button btn--outline btn--full btn--primary btn--add-to-cart" />
+</form></div>
+</div>
+  </div>
+{% endform %}
+     </div>             
+            <!-- code for sticky bar -->
+
+
+<script>
+              // STICKY BAR BUY NOW - JS CODE - WEBSENSEPRO.COM
+
+ 
+window.addEventListener('scroll', function() {
+  if (window.innerWidth > 1024) {
+    if (window.pageYOffset >= 500) {
+      document.querySelector('.sticky-bar').style.display = 'flex';
+    } else {
+      document.querySelector('.sticky-bar').style.display = 'none';
+    }
+  }
+});
+
+window.addEventListener('scroll', function() {
+  if (window.innerWidth < 1024) {
+    if (window.pageYOffset >= 900) {
+      document.querySelector('.sticky-bar').style.display = 'flex';
+    } else {
+      document.querySelector('.sticky-bar').style.display = 'none';
+    }
+  }
+});
+
+            </script>
+
+  <style>
+    /* CSS for sticky bar websensepro */
+  
+#MainContent .sticky-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 50px;
+  align-items: center;
+  background: #fff;
+  height: auto;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  width: 100%;
+  z-index: 3;
+  box-shadow: #000000 0 6px 12px -2px, #0000004d 0 3px 7px -3px;
+}
+
+.sticky-bar {
+/* display:none; */
+}
+
+.product-details-sticky,.product-title-sticky{
+  display: flex;
+  align-items: center;
+}
+
+.sticky-bar-price .variant-drop-down, .variant-drop-down .product-form__item{
+  display: flex;
+  align-items:center;
+  justify-content: end;
+}
+.variant-drop-down input[type=number] {
+    width: 50px;
+    border: black 1px solid;
+    margin: 5px; }
+
+.variant-button {
+  background-color: black;
+  color: white;
+  width: 150px;
+  margin-left: 5px;
+}
+
+.sticky-bar-thumb-thumb {
+margin:10px;
+vertical-align:middle;  
+}
+
+.sticky-bar-price .price--on-sale .price-item--regular {
+display:none;
+}
+
+ .sticky-bar-price .price:not(.price--show-badge) .price-item--last:last-of-type{
+      margin-top: 6px;
+    font-size: 15px; 
+ 
+ }
+.sticky-bar-form .sticky-bar-price{}
+.sticky-bar-form .sticky-bar-price .variant-drop-down select{
+  
+    margin-bottom: 0;
+    border-radius: 30px;
+}
+.sticky-bar-form .sticky-bar-price .variant-button.btn--add-to-cart{
+  
+    color: #fff;
+    width: 100%;
+    font-weight: 600;
+}
+@media (max-width:600px) {
+  .quantity-label {
+    display:none;
+  }
+  .sticky-bar {
+  padding: 0px !important;
+  }
+  .variant-button {
+  width: 65px;
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+
+}
+  
+/* End CSS for sticky bar */
+  </style>
