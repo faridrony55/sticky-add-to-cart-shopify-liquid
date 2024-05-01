@@ -1,4 +1,4 @@
-# sticky-add-to-cart-shopify-liquid
+# How to add sticky add to cart in shopify theme instead using apps
 
 
 
